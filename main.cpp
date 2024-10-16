@@ -1,26 +1,43 @@
-#include<stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <windows.h>
 
-int Recursive(int n) {
-	return n * 1072;
+// コールバック関数のプロトタイプ宣言
+typedef void (*callback_t)(int result);
+
+// サイコロの出目を決定する関数
+int roll_dice() {
+    return rand() % 6 + 1;
 }
 
-int Recursive2(int n) {
-	if (n <= 1) {
-		return (100);
-	}
-	return (Recursive(n - 1) * 2 - 50);
+// 判定を行うコールバック関数
+void judge_result(int result) {
+    int user_guess;
+    printf("サイコロの出目が奇数(1)か偶数(2)かを当ててください : ");
+    scanf_s("%d", &user_guess);
+
+    printf("判定中...\n");
+    Sleep(3000);  // 3秒待機 (ミリ秒単位)
+
+    if ((result % 2 == 1 && user_guess == 1) || (result % 2 == 0 && user_guess == 2)) {
+        printf("正解\n");
+    }
+    else {
+        printf("不正解\n");
+    }
+
+    printf("サイコロの出目は %d でした。\n", result);  // 出目を表示
 }
 
+// メイン関数
 int main() {
-	int n = 3;
-	int result{};
-	int result2{};
+    srand((int)time(NULL));  // 乱数シードを設定
 
-	result = Recursive(n);
-	result2 = Recursive2(n);
+    int dice_result = roll_dice();
+    callback_t callback = judge_result;
 
-	printf("一般的な資金体系で%d時間 = %d\n", n, result);
-	printf("再帰的な資金体系で%d時間 = %d\n", n, result2);
+    callback(dice_result);  // コールバック関数を呼び出し
 
-	return 0;
+    return 0;
 }
