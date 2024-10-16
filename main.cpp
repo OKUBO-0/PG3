@@ -14,7 +14,7 @@ int roll_dice() {
 // 判定を行うコールバック関数
 void judge_result(int result) {
     int user_guess;
-    printf("サイコロの出目が奇数(1)か偶数(2)かを当ててください : ");
+    printf("サイコロの出目が奇数(1)か偶数(2)かを入力してください : ");
     scanf_s("%d", &user_guess);
 
     printf("判定中...\n");
@@ -27,7 +27,7 @@ void judge_result(int result) {
         printf("不正解\n");
     }
 
-    printf("サイコロの出目は %d でした。\n", result);  // 出目を表示
+    printf("サイコロの出目は%d でした。\n", result);  // 出目を表示
 }
 
 // メイン関数
