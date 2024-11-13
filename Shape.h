@@ -1,24 +1,37 @@
-#pragma once
+#ifndef SHAPE_H
+#define SHAPE_H
+
+#include <cmath>
 
 // 抽象クラス IShape
-typedef struct IShape {
-    void (*Size)(void* self);  // 面積を求める関数ポインタ
-    void (*Draw)(void* self);  // 描画を行う関数ポインタ
-} IShape;
+class IShape {
+public:
+    virtual ~IShape() {}         // 仮想デストラクタ
+    virtual void Size() const = 0;  // 純粋仮想関数: 面積を求める
+    virtual void Draw() const = 0;  // 純粋仮想関数: 描画を行う
+};
 
 // Circleクラス
-typedef struct {
-    IShape base;  // IShapeのメンバ
-    double radius; // 半径
-} Circle;
+class Circle : public IShape {
+public:
+    Circle(double radius);
+    void Size() const override;  // 面積計算
+    void Draw() const override;  // 描画
+
+private:
+    double radius;
+};
 
 // Rectangleクラス
-typedef struct {
-    IShape base;  // IShapeのメンバ
-    double width; // 幅
-    double height; // 高さ
-} Rectangle;
+class Rectangle : public IShape {
+public:
+    Rectangle(double width, double height);
+    void Size() const override;  // 面積計算
+    void Draw() const override;  // 描画
 
-// 関数の宣言
-void Circle_Init(Circle* circle, double radius);
-void Rectangle_Init(Rectangle* rect, double width, double height);
+private:
+    double width;
+    double height;
+};
+
+#endif // SHAPE_H
